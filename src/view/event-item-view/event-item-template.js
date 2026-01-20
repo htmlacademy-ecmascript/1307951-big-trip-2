@@ -62,7 +62,6 @@ function createEventTemplate(tripEvent, tripEventsModel) {
 }
 
 function getOffersTemplate(tripEvent) {
-  const offers = s
-}
+  const offers = /* нужно добавить*/
 
 export {createEventTemplate};
