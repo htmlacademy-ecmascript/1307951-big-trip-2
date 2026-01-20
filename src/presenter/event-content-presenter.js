@@ -1,13 +1,15 @@
 import { render } from '../render.js';
-import EventListView from '../view/event-list-view.js';
-import SortView from '../view/sort-view.js';
-import EditFormView from '../view/edit-form-view.js';
+import EventListView from '../view/event-list-view/event-list-view.js';
+import SortView from '../view/sort-view/sort-view.js';
+import EditFormView from '../view/edit-form-view/edit-form-view.js';
 
 
 export default class EventContentPresenter {
-  constructor({eventsContainer, listLength}) {
+  constructor({eventsContainer, tripEventsModel}) {
     this.eventContainer = eventsContainer;
-    this.listLength = listLength;
+    // this.listLength = listLength;
+    this.tripEventsModel = tripEventsModel;
+
   }
 
   setListLength (length) {
@@ -15,7 +17,8 @@ export default class EventContentPresenter {
   }
 
   setEventListElement() {
-    this.eventList = new EventListView({ listContainer: this.eventContainer, listLength: this.listLength });
+    // this.eventList = new EventListView({ listContainer: this.eventContainer, listLength: this.listLength });
+    this.eventList = new EventListView({ listContainer: this.eventContainer, tripEventsModel: this.tripEventsModel });
     render(this.eventList, this.eventContainer);
     this.eventList.init();
   }
@@ -34,6 +37,7 @@ export default class EventContentPresenter {
     this.editForm = new EditFormView();
     this.eventList.getElement().firstElementChild.append(this.editForm.getElement());
   }
+  // TODO: добавить объекты событий
 
   init() {
     this.setEventListElement();

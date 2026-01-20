@@ -1,5 +1,3 @@
-// import EventListItemView from './event-list-item-view.js';
-import {createElement} from '../render.js';
 
 function createEditFormTemplate() {
   return (
@@ -166,21 +164,4 @@ function createEditFormTemplate() {
   );
 }
 
-export default class EditFormView {
-  getTemplate() {
-    return createEditFormTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
-  }
-
-}
+export {createEditFormTemplate};
