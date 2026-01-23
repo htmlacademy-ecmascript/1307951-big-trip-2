@@ -34,7 +34,9 @@ export default class EventContentPresenter {
 
   setEditFormElement() {
     this.eventList.addListItemBefore();
-    this.editForm = new EditFormView();
+
+    /**  создаем форму редактирования по id модели (для примера берем первую модель) */
+    this.editForm = new EditFormView({});
     this.eventList.getElement().firstElementChild.append(this.editForm.getElement());
   }
   // TODO: добавить объекты событий
