@@ -1,7 +1,7 @@
 import { getRundomTripEvent } from '../mock/mockTripEvent.js';
 import { destinationPoints } from '../mock/mockDestination.js';
 import { offers } from '../mock/mockOffers.js';
-import { tripEvents } from '../mock/mockTripEvent.js';
+// import { tripEvents } from '../mock/mockTripEvent.js';
 import { NUMBER_OF_TRIP_EVENTS } from '../const.js';
 
 
@@ -31,8 +31,8 @@ export default class TripEventsModel {
   }
 
   getOffersByEvent(tripEvent) {
-    console.log(tripEvent.type);
+    // console.log(tripEvent.type);
     const offersOfTripEvent = offers.find((offer) => offer.type === tripEvent.type).offers;
-    return tripEvent.offers.map((item) => {return offersOfTripEvent.find((offer) => offer.id === item)});
+    return tripEvent.offers.map((item) => offersOfTripEvent.find((offer) => offer.id === item));
   }
 }

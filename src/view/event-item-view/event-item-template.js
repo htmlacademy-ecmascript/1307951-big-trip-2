@@ -65,10 +65,11 @@ function getOffersOfTripEvent(tripEvent, tripEventsModel) {
           <span class="event__offer-title">${item.title}</span>
           +€&nbsp;
           <span class="event__offer-price">${item.price}</span>
-        </li>`
+        </li>`;
   });
 
   return listContent;
-};
+}
+
 
 export {createEventTemplate};

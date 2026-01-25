@@ -9,7 +9,6 @@ const tripEventsContainerElement = document.querySelector('.trip-events');
 // создаем экземпляр модели событий поездки
 const tripEventsModel = new TripEventsModel();
 
-console.log(tripEventsModel.getTripEvents());
 const mainPresenter = new MainPresenter({
   headerContainer: tripMainHeaderContainerElement,
   eventsContainer: tripEventsContainerElement,

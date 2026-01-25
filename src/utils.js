@@ -34,8 +34,8 @@ function dateDifferenceHoursMinutes(date1, date2) {
   const hoursInDay = 24;
   // 2019-07-20T16:45:30.234Z
   // '2024-05-20 23:00'
-  const initialDate1 = date1.slice(0, 10) + ' ' + date1.slice(11, 16);
-  const initialDate2 = date2.slice(0, 10) + ' ' + date2.slice(11, 16);
+  const initialDate1 = `${date1.slice(0, 10)} ${date1.slice(11, 16)}`;
+  const initialDate2 = `${date2.slice(0, 10)} ${date2.slice(11, 16)}`;
 
   // const initialDate1 = '2019-07-20 16:45';
   // const initialDate2 = '2019-07-24 19:50';

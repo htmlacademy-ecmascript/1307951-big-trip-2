@@ -1,4 +1,4 @@
-import {createElement} from '../../render.js';
+import {createElement, render, RenderPosition} from '../../render.js';
 import EventItemView from '../event-item-view/event-item-view.js';
 import EventListItemView from '../event-list-item-view/event-list-item-view.js';
 import { createEventListTemplate } from './event-list-template.js';
@@ -30,7 +30,8 @@ export default class EventListView {
   }
 
   addListItemBefore() {
-    this.getElement().prepend((new EventListItemView()).getElement());
+    // this.getElement().prepend((new EventListItemView()).getElement());
+    render(new EventListItemView(), this.getElement(), RenderPosition.AFTERBEGIN);
   }
 
   /**
@@ -39,7 +40,6 @@ export default class EventListView {
   addListItems() {
     const fragment = document.createDocumentFragment();
     const dataLength = this.tripEventsModel.getTripEventsLength();
-    console.log(`dataLength = ${dataLength}`);
     for (let i = 0; i < dataLength; i++) {
       fragment.appendChild((new EventListItemView()).getElement());
     }
@@ -53,12 +53,15 @@ export default class EventListView {
     const dataLength = this.tripEventsModel.getTripEventsLength();
     const eventsData = this.tripEventsModel.getTripEvents();
     const tripEvents = Array.from(this.getElement().querySelectorAll('li'));
-    // Array.from(this.getElement().querySelectorAll('li'), (item) => {
-    //   item.appendChild((new EventItemView()).getElement());
-    // });
+
     for (let i = 0; i < dataLength; i++) {
-      tripEvents[i].appendChild((new EventItemView({tripEventsModel : this.tripEventsModel, tripEventId : eventsData[i].id}).getElement()));
+      // tripEvents[i].appendChild((new EventItemView({tripEventsModel : this.tripEventsModel, tripEventId : eventsData[i].id}).getElement()));
+      render((new EventItemView({tripEventsModel : this.tripEventsModel, tripEventId : eventsData[i].id})), tripEvents[i]);
     }
+
+  }
+
+  openEditFromById() {
 
   }
 
