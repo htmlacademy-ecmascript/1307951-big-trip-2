@@ -21,8 +21,12 @@ export default class EventListView {
     return this.element;
   }
 
-  removeElement() {
+  removeAllElements() {
     this.element = null;
+  }
+
+  removeOneElementByIndex(index) {
+    document.querySelector(`li:nth-child(${index + 1})`).remove();
   }
 
   clearElement() {
@@ -43,6 +47,7 @@ export default class EventListView {
     for (let i = 0; i < dataLength; i++) {
       fragment.appendChild((new EventListItemView()).getElement());
     }
+
     this.getElement().appendChild(fragment);
   }
 
@@ -52,6 +57,7 @@ export default class EventListView {
   fillWithEventItems() {
     const dataLength = this.tripEventsModel.getTripEventsLength();
     const eventsData = this.tripEventsModel.getTripEvents();
+    /** взяли массив из уже добавленных li */
     const tripEvents = Array.from(this.getElement().querySelectorAll('li'));
 
     for (let i = 0; i < dataLength; i++) {
@@ -61,46 +67,8 @@ export default class EventListView {
 
   }
 
-  openEditFromById() {
-
-  }
-
   init() {
     this.addListItems();
     this.fillWithEventItems();
   }
-  // addListItems(elementsNumber) {
-
-  //   const fragment = document.createDocumentFragment();
-  //   for (let i = 0; i < elementsNumber; i++) {
-  //     fragment.appendChild((new EventListItemView()).getElement());
-  //   }
-
-  //   return this.getElement().appendChild(fragment);
-  // }
-
-  // fillWithElements(elementsNumber) {
-
-  //   const fragment = document.createDocumentFragment();
-
-  //   for (let i = 0; i < 1; i++) {
-  //     const eventItem = new EventItemView();
-  //     const eventListItem = new EventListItemView();
-  //     const eventListElement = eventListItem.getElement();
-  //     const eventItemElement = eventItem.getElement();
-  //     const finalElement = eventListElement.appendChild(eventItemElement);
-  //     console.log(eventListElement);
-
-  //     const eliItem = eventListItem.getElement().appendChild(eventItem.getElement());
-  //     // console.log(eliItem);
-  //     const listItem = this.getElement()
-  //       .appendChild(eventListItem.getElement()
-  //         .appendChild(eventItem.getElement()));
-  //     // console.log(listItem);
-  //     fragment.appendChild(listItem);
-  //   }
-
-  //   return this.element.appendChild(fragment);
-
-  // }
 }

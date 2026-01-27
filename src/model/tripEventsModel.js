@@ -35,4 +35,11 @@ export default class TripEventsModel {
     const offersOfTripEvent = offers.find((offer) => offer.type === tripEvent.type).offers;
     return tripEvent.offers.map((item) => offersOfTripEvent.find((offer) => offer.id === item));
   }
+
+  /** возвращает все предложения/offers одного типа, например taxi или bus  */
+
+  getAllOffersByType(type) {
+    return (offers.find((item) => item.type === type)).offers;
+  }
+
 }
