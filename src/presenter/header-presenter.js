@@ -1,5 +1,5 @@
 import { render } from '../render.js';
-import FilterView from '../view/filter-view.js';
+import FilterView from '../view/filter-view/filter-view.js';
 
 
 export default class HeaderPresenter {
