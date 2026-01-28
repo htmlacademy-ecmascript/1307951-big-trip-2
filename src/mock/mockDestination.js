@@ -6,15 +6,15 @@ export const destinationPoints = [
     name: 'Chamonix',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.0762563005163317',
+        src: 'https://loremflickr.com/248/152?random=106',
         description: 'Chamonix parliament building'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.1762563005163317',
+        src: 'https://loremflickr.com/248/152?random=236',
         description: 'Chamonix city center view'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.2762563005163317',
+        src: 'https://loremflickr.com/248/152?random=365',
         description: 'Mountain panorama near Chamonix'
       }
     ]
@@ -25,15 +25,15 @@ export const destinationPoints = [
     name: 'Paris',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.123456',
+        src: 'https://loremflickr.com/248/152?random=4215',
         description: 'Eiffel Tower at sunset'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.223456',
+        src: 'https://loremflickr.com/248/152?random=5142',
         description: 'Louvre Museum glass pyramid'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.323456',
+        src: 'https://loremflickr.com/248/152?random=632',
         description: 'Seine river embankment at night'
       }
     ]
@@ -44,15 +44,15 @@ export const destinationPoints = [
     name: 'Rome',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.234567',
+        src: 'https://loremflickr.com/248/152?random=745',
         description: 'Colosseum at dawn'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.334567',
+        src: 'https://loremflickr.com/248/152?random=138',
         description: 'Trevi Fountain close-up'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.434567',
+        src: 'https://loremflickr.com/248/152?random=349',
         description: 'St. Peter’s Basilica square'
       }
     ]
@@ -63,15 +63,15 @@ export const destinationPoints = [
     name: 'Barcelona',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.345678',
+        src: 'https://loremflickr.com/248/152?random=140',
         description: 'Sagrada Familia spires'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.445678',
+        src: 'https://loremflickr.com/248/152?random=121',
         description: 'Park Güell mosaic terrace'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.545678',
+        src: 'https://loremflickr.com/248/152?random=172',
         description: 'Barceloneta beach promenade'
       }
     ]
@@ -88,15 +88,15 @@ export const destinationPoints = [
     name: 'Berlin',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.567890',
+        src: 'https://loremflickr.com/248/152?random=113',
         description: 'Brandenburg Gate'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.667890',
+        src: 'https://loremflickr.com/248/152?random=154',
         description: 'Berlin Wall graffiti'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.767890',
+        src: 'https://loremflickr.com/248/152?random=415',
         description: 'Reichstag glass dome'
       }
     ]
@@ -107,15 +107,15 @@ export const destinationPoints = [
     name: 'London',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.678901',
+        src: 'https://loremflickr.com/248/152?random=616',
         description: 'Big Ben and Thames'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.778901',
+        src: 'https://loremflickr.com/248/152?random=517',
         description: 'Tower Bridge at night'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.878901',
+        src: 'https://loremflickr.com/248/152?random=718',
         description: 'Buckingham Palace front view'
       }
     ]
@@ -126,15 +126,15 @@ export const destinationPoints = [
     name: 'Vienna',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.789012',
+        src: 'https://loremflickr.com/248/152?random=919',
         description: 'Schönbrunn Palace gardens'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.889012',
+        src: 'https://loremflickr.com/248/152?random=425',
         description: 'St. Stephen’s Cathedral tower'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.989012',
+        src: 'https://loremflickr.com/248/152?random=421',
         description: 'Traditional Viennese coffeehouse'
       }
     ]
@@ -145,15 +145,15 @@ export const destinationPoints = [
     name: 'Prague',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.890123',
+        src: 'https://loremflickr.com/248/152?random=422',
         description: 'Charles Bridge at night'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.990123',
+        src: 'https://loremflickr.com/248/152?random=243',
         description: 'Prague Castle panorama'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.190123',
+        src: 'https://loremflickr.com/248/152?random=480',
         description: 'Old Town Square aerial view'
       }
     ]
@@ -164,15 +164,15 @@ export const destinationPoints = [
     name: 'Budapest',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.901234',
+        src: 'https://loremflickr.com/248/152?random=418',
         description: 'Parliament building reflection'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.001234',
+        src: 'https://loremflickr.com/248/152?random=427',
         description: 'Széchenyi thermal baths'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.101234',
+        src: 'https://loremflickr.com/248/152?random=143',
         description: 'Buda Castle night skyline'
       }
     ]
@@ -183,15 +183,15 @@ export const destinationPoints = [
     name: 'Lisbon',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.012345',
+        src: 'https://loremflickr.com/248/152?random=344',
         description: 'Alfama district rooftops'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.112345',
+        src: 'https://loremflickr.com/248/152?random=445',
         description: 'Tram 28 on a steep street'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.212345',
+        src: 'https://loremflickr.com/248/152?random=746',
         description: 'Belém Tower by the river'
       }
     ]
@@ -202,15 +202,15 @@ export const destinationPoints = [
     name: 'Madrid',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.112233',
+        src: 'https://loremflickr.com/248/152?random=2147',
         description: 'Royal Palace courtyard'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.212233',
+        src: 'https://loremflickr.com/248/152?random=148',
         description: 'Plaza Mayor in the evening'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.312233',
+        src: 'https://loremflickr.com/248/152?random=149',
         description: 'Gran Vía traffic lights'
       }
     ]
@@ -221,15 +221,15 @@ export const destinationPoints = [
     name: 'Athens',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.223344',
+        src: 'https://loremflickr.com/248/152?random=350',
         description: 'Acropolis at golden hour'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.323344',
+        src: 'https://loremflickr.com/248/152?random=251',
         description: 'Ancient Agora ruins'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.423344',
+        src: 'https://loremflickr.com/248/152?random=552',
         description: 'Plaka district street café'
       }
     ]
@@ -240,15 +240,15 @@ export const destinationPoints = [
     name: 'Stockholm',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.334455',
+        src: 'https://loremflickr.com/248/152?random=660',
         description: 'Gamla Stan cobblestone street'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.434455',
+        src: 'https://loremflickr.com/248/152?random=461',
         description: 'Stockholm archipelago view'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.534455',
+        src: 'https://loremflickr.com/248/152?random=162',
         description: 'City Hall by the water'
       }
     ]
@@ -259,15 +259,15 @@ export const destinationPoints = [
     name: 'Copenhagen',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.445566',
+        src: 'https://loremflickr.com/248/152?random=363',
         description: 'Nyhavn colorful houses'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.545566',
+        src: 'https://loremflickr.com/248/152?random=464',
         description: 'Bicycles parked along canal'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.645566',
+        src: 'https://loremflickr.com/248/152?random=170',
         description: 'Opera House across the harbor'
       }
     ]
@@ -278,15 +278,15 @@ export const destinationPoints = [
     name: 'Dublin',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.556677',
+        src: 'https://loremflickr.com/248/152?random=274',
         description: 'Trinity College library'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.656677',
+        src: 'https://loremflickr.com/248/152?random=175',
         description: 'Temple Bar pub street'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.756677',
+        src: 'https://loremflickr.com/248/152?random=576',
         description: 'Ha\'penny Bridge over Liffey'
       }
     ]
@@ -297,15 +297,11 @@ export const destinationPoints = [
     name: 'Edinburgh',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.667788',
-        description: 'Edinburgh Castle from Princes Street'
-      },
-      {
-        src: 'http://picsum.photos/300/200?r=0.767788',
+        src: 'https://loremflickr.com/248/152?random=578',
         description: 'Royal Mile cobbled street'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.867788',
+        src: 'https://loremflickr.com/248/152?random=479',
         description: 'Calton Hill city viewpoint'
       }
     ]
@@ -316,15 +312,15 @@ export const destinationPoints = [
     name: 'Warsaw',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.778899',
+        src: 'https://loremflickr.com/248/152?random=380',
         description: 'Old Town Market Square'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.878899',
+        src: 'https://loremflickr.com/248/152?random=181',
         description: 'Palace of Culture and Science'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.978899',
+        src: 'https://loremflickr.com/248/152?random=282',
         description: 'Vistula river boulevards'
       }
     ]
@@ -335,15 +331,11 @@ export const destinationPoints = [
     name: 'Porto',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.889900',
+        src: 'https://loremflickr.com/248/152?random=783',
         description: 'Ribeira district along Douro'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.989900',
-        description: 'Dom Luís I Bridge'
-      },
-      {
-        src: 'http://picsum.photos/300/200?r=0.189900',
+        src: 'https://loremflickr.com/248/152?random=385',
         description: 'Port wine cellars interior'
       }
     ]
@@ -354,15 +346,15 @@ export const destinationPoints = [
     name: 'Brussels',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.990011',
+        src: 'https://loremflickr.com/248/152?random=486',
         description: 'Grand Place guildhalls'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.090011',
+        src: 'https://loremflickr.com/248/152?random=687',
         description: 'Atomium modernist structure'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.190011',
+        src: 'https://loremflickr.com/248/152?random=988',
         description: 'Chocolate shop window display'
       }
     ]
@@ -373,15 +365,15 @@ export const destinationPoints = [
     name: 'Zurich',
     pictures: [
       {
-        src: 'http://picsum.photos/300/200?r=0.001122',
+        src: 'https://loremflickr.com/248/152?random=788',
         description: 'Lake Zurich promenade'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.101122',
+        src: 'https://loremflickr.com/248/152?random=389',
         description: 'Old Town riverside houses'
       },
       {
-        src: 'http://picsum.photos/300/200?r=0.201122',
+        src: 'https://loremflickr.com/248/152?random=190',
         description: 'Snowy Alps visible from city'
       }
     ]

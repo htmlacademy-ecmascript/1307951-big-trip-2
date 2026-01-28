@@ -42,4 +42,7 @@ export default class TripEventsModel {
     return (offers.find((item) => item.type === type)).offers;
   }
 
+  getDestinationPoin(destId) {
+    return destinationPoints.find((item) => item.id === destId);
+  }
 }

@@ -1,11 +1,12 @@
 import { DATE_FORMAT } from '../../const.js';
+// import { destinationPoints } from '../../mock/mockDestination.js';
 import { convertDateFromat } from '../../utils.js';
 
 
 function createEditFormTemplate(tripEvent, tripEventsModel) {
   const dateFrom = convertDateFromat(tripEvent.dateFrom, DATE_FORMAT['YY/MM/DD HH:mm']);
   const dateTo = convertDateFromat(tripEvent.dateTo, DATE_FORMAT['YY/MM/DD HH:mm']);
-
+  const destination = tripEventsModel.getDestinationPoin(tripEvent.destination);
   return (
     ` <form class="event event--edit" action="#" method="post">
                 <header class="event__header">
@@ -107,21 +108,17 @@ function createEditFormTemplate(tripEvent, tripEventsModel) {
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
                     <div class="event__available-offers">
-                      ${offerSelector(tripEventsModel, tripEvent)}
+                      ${getOffers(tripEventsModel, tripEvent)}
                     </div>
                   </section>
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">Geneva is a city in Switzerland that lies at the southern tip of expansive Lac Léman (Lake Geneva). Surrounded by the Alps and Jura mountains, the city has views of dramatic Mont Blanc.</p>
+                    <p class="event__destination-description">${destination.description}</p>
 
                     <div class="event__photos-container">
                       <div class="event__photos-tape">
-                        <img class="event__photo" src="img/photos/1.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/2.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/3.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/4.jpg" alt="Event photo">
-                        <img class="event__photo" src="img/photos/5.jpg" alt="Event photo">
+                      ${getDestinationPicturs(destination)}
                       </div>
                     </div>
                   </section>
@@ -130,8 +127,15 @@ function createEditFormTemplate(tripEvent, tripEventsModel) {
   );
 }
 
+function getDestinationPicturs(destination) {
+  let pictureList = '';
+  destination.pictures.forEach((item) => {
+    pictureList += `<img class="event__photo" src="${item.src}" alt="${item.description}"></img>`;
+  });
+  return pictureList;
+}
 
-function offerSelector(tripEventsModel, tripEvent) {
+function getOffers(tripEventsModel, tripEvent) {
   // все предложения данного типа
   const offers = tripEventsModel.getAllOffersByType(tripEvent.type);
   // все предложения данного типа, которые checked
