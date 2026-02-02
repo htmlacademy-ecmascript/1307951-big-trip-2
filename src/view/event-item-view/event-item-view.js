@@ -1,19 +1,35 @@
 import { createEventItemTemplate } from './event-item-template.js';
 import AbstractView from '../../framework/view/abstract-view.js';
+// import { createElement } from '../../framework/render.js';
 
 export default class EventItemView extends AbstractView{
-  #tripEventsModel = null;
-  #tripEvent = null;
+
   /** в конструктор передается объект с данными */
-  constructor({tripEventsModel, tripEventId}) {
+  #eventParam = null;
+  #handleOnClick = null;
+  // #element = null;
+  constructor({eventParam, onClick}) {
     super();
-    this.#tripEventsModel = tripEventsModel;
-    this.#tripEvent = this.#tripEventsModel.getTripEventById(tripEventId);
+    this.#eventParam = eventParam;
+    this.#handleOnClick = onClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('pointerdown', this.#onHandleClick);
+
   }
 
   get template() {
-    return createEventItemTemplate(this.#tripEvent, this.#tripEventsModel);
+    return createEventItemTemplate({
+      dateFrom: this.#eventParam.dateFrom,
+      dateTo: this.#eventParam.dateTo,
+      basePrice: this.#eventParam.basePrice,
+      type: this.#eventParam.type,
+      title: this.#eventParam.title,
+      offers: this.#eventParam.offers
+    });
   }
 
+  #onHandleClick = (evt) => {
+    evt.preventDefault();
+    this.#handleOnClick();
+  };
 
 }

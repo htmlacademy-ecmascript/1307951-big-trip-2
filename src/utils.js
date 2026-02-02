@@ -22,6 +22,7 @@ function convertDateFromat(dueDate, dateFormat) {
  * @returns {string} строка с датой в новом формате
  */
 function shortenDateString(dueDate, dueDateLength = 16) {
+  console.log(typeof dayjs(dueDate));
   return (dueDate.length > dueDateLength) ? dueDate.slice(0, dueDateLength) : dueDate;
 }
 /**
