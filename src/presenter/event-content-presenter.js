@@ -8,7 +8,7 @@ export default class EventContentPresenter {
   #eventContainer = null;
   #tripEventsModel = null;
   #eventListPresenter = null;
-  #eventItemPresenters = [];
+  #eventItemPresenters = new Map();
   #tripEvents = null;
 
   constructor({eventsContainer, tripEventsModel}) {
@@ -48,6 +48,7 @@ export default class EventContentPresenter {
 
   #fillListWithEventElements() {
     this.#tripEvents.forEach((tripEventModel) => {
+
       const eventParam = this.#prepareEventArguments(tripEventModel);
       const formParam = this.#prepareFormArguments(tripEventModel);
 
@@ -58,7 +59,7 @@ export default class EventContentPresenter {
 
       eventItemPresenter.init();
 
-      this.#eventItemPresenters.push(eventItemPresenter);
+      this.#eventItemPresenters.set(tripEventModel.id, eventItemPresenter);
     });
   }
 

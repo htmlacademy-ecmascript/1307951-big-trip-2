@@ -1,6 +1,6 @@
 import { DATE_FORMAT } from '../../const.js';
 // import { destinationPoints } from '../../mock/mockDestination.js';
-import { convertDateFromat } from '../../utils.js';
+import { convertDateFromat } from '../../utils/event.js';
 
 
 function createEditFormTemplate({dateFrom, dateTo, basePrice, type, destination, allOffers, appliedOffers}) {

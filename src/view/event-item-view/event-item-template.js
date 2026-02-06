@@ -1,4 +1,4 @@
-import { convertDateFromat, shortenDateString, dateDifferenceHoursMinutes } from '../../utils.js';
+import { convertDateFromat, shortenDateString, dateDifferenceHoursMinutes } from '../../utils/event.js';
 import { DATE_FORMAT } from '../../const.js';
 
 /**TODO соотнести параметры с аргументами */
