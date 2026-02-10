@@ -3,7 +3,8 @@ import { DATE_FORMAT } from '../../const.js';
 import { convertDateFromat } from '../../utils/event.js';
 
 
-function createEditFormTemplate({dateFrom, dateTo, basePrice, type, destination, allOffers, appliedOffers}) {
+function createEditFormTemplate({eventModel, destination, allOffers, appliedOffers}) {
+  const {dateFrom, dateTo, basePrice, type} = eventModel;
   const fromDate = convertDateFromat(dateFrom, DATE_FORMAT['YY/MM/DD HH:mm']);
   const toDate = convertDateFromat(dateTo, DATE_FORMAT['YY/MM/DD HH:mm']);
 

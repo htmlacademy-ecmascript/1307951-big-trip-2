@@ -101,4 +101,5 @@ function isEventDateInFuture(dueDate) {
   return dueDate && dayjs().isBefore(dueDate, 'D');
 }
 
+
 export {isEventDateExpired, isEventDateInPresent, isEventDateInFuture, convertDateFromat, shortenDateString, dateDifferenceHoursMinutes };

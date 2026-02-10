@@ -1,6 +1,6 @@
 
 function createFilterItemTemplate(filter, isChecked) {
-  const {type, count } = filter;
+  const {type, count} = filter;
 
   return `
       <div class="trip-filters__filter">

@@ -2,6 +2,7 @@ import { render } from '../framework/render.js';
 import SortView from '../view/sort-view/sort-view.js';
 import EventListPresenter from './event-list-presenter.js';
 import EventItemPresenter from './event-item-presenter.js';
+import { updateItem } from '../utils/common.js';
 
 
 export default class EventContentPresenter {
@@ -23,43 +24,39 @@ export default class EventContentPresenter {
     this.#fillListWithEventElements();
   }
 
-  #prepareEventArguments(tripEventModel) {
+  #prepareEventArguments(tripEvent) {
     return {
-      dateFrom: tripEventModel.dateFrom,
-      dateTo: tripEventModel.dateTo,
-      basePrice: tripEventModel.basePrice,
-      type: tripEventModel.type,
-      title: this.#tripEventsModel.getTripTitle(tripEventModel),
-      offers: this.#tripEventsModel.getOffersByEvent(tripEventModel),
+      eventModel: tripEvent,
+      title: this.#tripEventsModel.getTripTitle(tripEvent),
+      offers: this.#tripEventsModel.getOffersByEvent(tripEvent),
     };
   }
 
-  #prepareFormArguments(tripEventModel) {
+  #prepareFormArguments(tripEvent) {
     return {
-      dateFrom: tripEventModel.dateFrom,
-      dateTo: tripEventModel.dateTo,
-      basePrice: tripEventModel.basePrice,
-      type: tripEventModel.type,
-      destination: this.#tripEventsModel.getDestinationPoint(tripEventModel.destination),
-      allOffers: this.#tripEventsModel.getAllOffersByType(tripEventModel.type),
-      appliedOffers: this.#tripEventsModel.getOffersByEvent(tripEventModel)
+      eventModel: tripEvent,
+      destination: this.#tripEventsModel.getDestinationPoint(tripEvent.destination),
+      allOffers: this.#tripEventsModel.getAllOffersByType(tripEvent.type),
+      appliedOffers: this.#tripEventsModel.getOffersByEvent(tripEvent)
     };
   }
 
   #fillListWithEventElements() {
-    this.#tripEvents.forEach((tripEventModel) => {
+    this.#tripEvents.forEach((tripEvent) => {
 
-      const eventParam = this.#prepareEventArguments(tripEventModel);
-      const formParam = this.#prepareFormArguments(tripEventModel);
+      const eventParam = this.#prepareEventArguments(tripEvent);
+      const formParam = this.#prepareFormArguments(tripEvent);
 
       const eventItemPresenter = new EventItemPresenter({
         listContainer: this.#eventListPresenter.element,
         eventParameters: eventParam,
-        formParameters: formParam });
+        formParameters: formParam,
+        onDataChange: this.#handleEventItemChange, });
 
-      eventItemPresenter.init();
-
-      this.#eventItemPresenters.set(tripEventModel.id, eventItemPresenter);
+      /** тут надо инициализировать вместе с моделью init(tripEvent) */
+      eventItemPresenter.init(tripEvent);
+      /** сохраняем презентер каждой точки маршрута и её id */
+      this.#eventItemPresenters.set(tripEvent.id, eventItemPresenter);
     });
   }
 
@@ -74,6 +71,19 @@ export default class EventContentPresenter {
 
       this.#eventContainer.insertBefore(this.sortForm.element, this.#eventContainer.firstElementChild.nextElementSibling);
     }
+  }
+
+  /**
+   * обновляем список, если были сделаны изменения в элементе списка
+   * НЕ МЕШАЛО БЫ СДЕЛАТЬ ЭТО В КОМПОНЕНТЕ СПИСКА eventListPresenter
+   */
+  #handleEventItemChange = (updateTripEvent) => {
+    this.#tripEvents = updateItem(this.#tripEvents, updateTripEvent);
+    this.#eventItemPresenters.get(updateTripEvent.id).init(updateTripEvent);
+  };
+
+  #renderNoTasks() {
+    render();
   }
 
   init() {
