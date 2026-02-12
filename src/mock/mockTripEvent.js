@@ -87,11 +87,37 @@ const tripEvents = [
  * @returns {obj}
  */
 function getRundomTripEvent() {
+  // return {
+  //   id: nanoid(),
+  //   ...getRandomArrayElement(tripEvents)
+  // };
 
-  return {
-    id: nanoid(),
-    ...getRandomArrayElement(tripEvents)
-  };
+  return getRandomArrayElement(tripEvents);
 }
 
-export { getRundomTripEvent };
+/** Проверка уникальности по id объекта */
+function isUnique(objectsArray) {
+  const unique = objectsArray.reduce((accumulator, current) => {
+    // const isIdEqual = (element) => element.id
+    if (accumulator.findIndex((object) => object.id === current.id) === -1) {
+    // if (accumulator.findIndex((object) => object.id === current.id)) === -1) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+  return unique;
+}
+
+function getRundomTripEventArray(arrayLength) {
+
+  let tripEventsArray = [];
+
+  while (tripEventsArray.length !== arrayLength) {
+    tripEventsArray.push(getRundomTripEvent());
+    tripEventsArray = tripEventsArray.filter((v, i, arr) => arr.indexOf(v) === i);
+  }
+
+  return tripEventsArray;
+}
+
+export { getRundomTripEvent, getRundomTripEventArray };

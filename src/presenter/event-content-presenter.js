@@ -2,7 +2,8 @@ import { render } from '../framework/render.js';
 import SortView from '../view/sort-view/sort-view.js';
 import EventListPresenter from './event-list-presenter.js';
 import EventItemPresenter from './event-item-presenter.js';
-import { updateItem } from '../utils/common.js';
+// import { updateItem } from '../utils/common.js';
+import NoEventsView from '../view/no-events-view/no-events-view.js';
 
 
 export default class EventContentPresenter {
@@ -10,6 +11,7 @@ export default class EventContentPresenter {
   #tripEventsModel = null;
   #eventListPresenter = null;
   #eventItemPresenters = new Map();
+  #eventNoView = null;
   #tripEvents = null;
 
   constructor({eventsContainer, tripEventsModel}) {
@@ -51,7 +53,8 @@ export default class EventContentPresenter {
         listContainer: this.#eventListPresenter.element,
         eventParameters: eventParam,
         formParameters: formParam,
-        onDataChange: this.#handleEventItemChange, });
+        onDataChange: this.#handleEventItemChange,
+        onModeChange: this.#handleModeChange });
 
       /** тут надо инициализировать вместе с моделью init(tripEvent) */
       eventItemPresenter.init(tripEvent);
@@ -78,18 +81,33 @@ export default class EventContentPresenter {
    * НЕ МЕШАЛО БЫ СДЕЛАТЬ ЭТО В КОМПОНЕНТЕ СПИСКА eventListPresenter
    */
   #handleEventItemChange = (updateTripEvent) => {
-    this.#tripEvents = updateItem(this.#tripEvents, updateTripEvent);
+
+    this.#tripEventsModel.update(updateTripEvent);
+    this.#tripEvents = this.#tripEventsModel.getTripEvents();
+    // находим itemPresenter по id и обновляем  его
     this.#eventItemPresenters.get(updateTripEvent.id).init(updateTripEvent);
   };
 
+  #handleModeChange = () => {
+    this.#eventItemPresenters.forEach((presenter) => presenter.resetView());
+  };
+
   #renderNoTasks() {
-    render();
+
+    render(new NoEventsView(), this.#eventContainer);
   }
 
   init() {
-    this.#tripEvents = [...this.#tripEventsModel.getTripEvents()];
-    this.#setEventListElement();
-    this.#setSortFormElement();
+    // this.#tripEvents = this.#tripEventsModel.getTripEvents();
+    this.#tripEvents = [];
+
+    if (this.#tripEvents.length < 1) {
+      this.#renderNoTasks();
+    } else {
+      this.#setEventListElement();
+      this.#setSortFormElement();
+
+    }
   }
 
 }

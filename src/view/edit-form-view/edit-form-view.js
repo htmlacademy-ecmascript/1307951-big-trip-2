@@ -8,13 +8,13 @@ export default class EditFormView extends AbstractView{
   #handleEditClick = null;
   #handleOnEscKeyClick = null;
 
-  constructor ({tripEvent,formParam, onFormSubmit, onEditClick, onEscKeyClick}) {
+  constructor ({tripEvent,formParam, onFormSubmit, onEditClick/** , onEscKeyClick*/}) {
     super();
     this.#tripEvent = tripEvent;
     this.#formParam = formParam;
     this.#handleFormSubmit = onFormSubmit;
     this.#handleEditClick = onEditClick;
-    this.#handleOnEscKeyClick = onEscKeyClick;
+    // this.#handleOnEscKeyClick = onEscKeyClick;
     this.#initEventListeners();
   }
 
@@ -40,16 +40,17 @@ export default class EditFormView extends AbstractView{
   };
 
 
-  #onEscKeyPress = (evt) => {
-    this.#handleOnEscKeyClick(evt);
-  };
+  // #onEscKeyPress = (evt) => {
+  //   this.#handleOnEscKeyClick(evt);
+  // };
 
   #initEventListeners() {
-    this.element.querySelector('.event__save-btn').addEventListener('submit', this.#onFormSubmit);
+    // this.element.querySelector('.event__save-btn').addEventListener('submit', this.#onFormSubmit);
+    this.element.querySelector('.event__save-btn').addEventListener('pointerdown', this.#onFormSubmit);
 
     this.element.querySelector('.event__rollup-btn').addEventListener('pointerdown', this.#onEditFormClick);
 
-    document.addEventListener('pointerdown', this.#onEscKeyPress);
+    // document.addEventListener('pointerdown', this.#onEscKeyPress);
   }
 
 }

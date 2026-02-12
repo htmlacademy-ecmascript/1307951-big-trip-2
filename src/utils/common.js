@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {*} items массив элементов, из которого рандомным образом нужно взять элемент
+ * @returns один элемент массива
+ */
+
 function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
