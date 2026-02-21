@@ -82,6 +82,13 @@ export const destinationPoints = [
     name: 'Amsterdam',
     pictures: []
   },
+
+  {
+    id: 'd4e5f6g7-h8i9-0123-def0-456789012548',
+    description: '',
+    name: 'Muhosransk',
+    pictures: [],
+  },
   {
     id: 'e5f6g7h8-i9j0-1234-ef01-567890123456',
     description: 'Berlin pulses with cutting-edge art, historic landmarks and a thriving techno music scene.',

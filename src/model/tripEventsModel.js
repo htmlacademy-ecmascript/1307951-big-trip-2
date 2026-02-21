@@ -43,11 +43,28 @@ export default class TripEventsModel {
     return (offers.find((item) => item.type === type)).offers;
   }
 
-  getDestinationPoint(destId) {
+  getDestinationPointById(destId) {
     return destinationPoints.find((item) => item.id === destId);
+  }
+
+  getDestinationPointByName(destName) {
+    return destinationPoints.find((item) => item.name === destName);
+  }
+
+  getAllOffers() {
+    return offers;
+  }
+
+  getAllDestinations() {
+    return destinationPoints;
+  }
+
+  getDestinationNames() {
+    return destinationPoints.map((point) => point.name);
   }
 
   update(updateTripEvent) {
     this.#tripEvents = updateItem(this.#tripEvents, updateTripEvent);
   }
+
 }
