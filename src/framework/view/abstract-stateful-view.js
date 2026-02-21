@@ -17,7 +17,6 @@ export default class AbstractStatefulView extends AbstractView {
     }
 
     this._setState(update);
-
     this.#rerenderElement();
   }
 
@@ -39,12 +38,15 @@ export default class AbstractStatefulView extends AbstractView {
 
   /** Метод для перерисовки элемента */
   #rerenderElement() {
+    console.log('предыдущий элемент');
+    console.log(this.element);
     const prevElement = this.element;
     const parent = prevElement.parentElement;
     this.removeElement();
 
     const newElement = this.element;
-
+    console.log('новый элемент');
+    console.log(newElement);
     parent.replaceChild(newElement, prevElement);
 
     this._restoreHandlers();

@@ -30,7 +30,7 @@ export default class EventContentPresenter {
 
   #prepareEventArguments(tripEvent) {
     return {
-      eventModel: tripEvent,
+      // eventModel: tripEvent,
       title: this.#tripEventsModel.getTripTitle(tripEvent),
       offers: this.#tripEventsModel.getOffersByEvent(tripEvent),
     };
@@ -38,10 +38,10 @@ export default class EventContentPresenter {
 
   #prepareFormArguments(tripEvent) {
     return {
-      eventModel: tripEvent,
-      destination: this.#tripEventsModel.getDestinationPoint(tripEvent.destination),
-      allOffers: this.#tripEventsModel.getAllOffersByType(tripEvent.type),
-      appliedOffers: this.#tripEventsModel.getOffersByEvent(tripEvent)
+      // eventModel: tripEvent,
+      // destination: this.#tripEventsModel.getDestinationPoint(tripEvent.destination),
+      allOffersByCurrentType: this.#tripEventsModel.getAllOffersByType(tripEvent.type),
+      appliedOffersByCurrentType: this.#tripEventsModel.getOffersByEvent(tripEvent)
     };
   }
 
@@ -49,12 +49,16 @@ export default class EventContentPresenter {
     this.#tripEvents.forEach((tripEvent) => {
 
       const eventParam = this.#prepareEventArguments(tripEvent);
-      const formParam = this.#prepareFormArguments(tripEvent);
+      // const formParam = this.#prepareFormArguments(tripEvent);
 
       const eventItemPresenter = new EventItemPresenter({
         listContainer: this.#eventListPresenter.element,
+        tripEventsModel: this.#tripEventsModel,
+        tripEvent: tripEvent,
+
         eventParameters: eventParam,
-        formParameters: formParam,
+
+        // formParameters: formParam,
         onDataChange: this.#handleEventItemChange,
         onModeChange: this.#handleModeChange });
 
