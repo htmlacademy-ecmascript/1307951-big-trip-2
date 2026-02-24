@@ -4,7 +4,7 @@ export const DATE_FORMAT = {
   'YYYY-MM-DD':'YYYY-MM-DD',
   'MMM DD':'MMM DD',
   'HH:mm':'HH:mm',
-  'YY/MM/DD HH:mm':'YY/MM/DD HH:mm',
+  'DD/MM/YY HH:mm':'DD/MM/YY HH:mm',
 };
 
 export const FilterType = {

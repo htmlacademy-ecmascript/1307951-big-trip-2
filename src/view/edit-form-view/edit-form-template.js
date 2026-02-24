@@ -6,10 +6,10 @@ import { convertDateFromat } from '../../utils/event.js';
 function createEditFormTemplate({destinationTripPoints, tripEvent, destination, allOffers, appliedOffers}) {
   const destPoints = destinationTripPoints;
   const {dateFrom, dateTo, basePrice, type} = tripEvent;
-  const fromDate = convertDateFromat(dateFrom, DATE_FORMAT['YY/MM/DD HH:mm']);
-  const toDate = convertDateFromat(dateTo, DATE_FORMAT['YY/MM/DD HH:mm']);
-  console.log('destination');
-  console.log(destination);
+  const fromDate = convertDateFromat(dateFrom, DATE_FORMAT['DD/MM/YY HH:mm']);
+  const toDate = convertDateFromat(dateTo, DATE_FORMAT['DD/MM/YY HH:mm']);
+  // console.log('destination');
+  // console.log(destination);
   return (
     `<li class="trip-events__item">
       <form class="event event--edit" action="#" method="post">

@@ -1,11 +1,13 @@
 import { createEditFormTemplate } from '../edit-form-view/edit-form-template.js';
 import AbstractStatefulView from '../../framework/view/abstract-stateful-view.js';
 import flatpickr from 'flatpickr';
-import { Russian } from "flatpickr/dist/l10n/ru.js"
-
+// import { Russian } from "flatpickr/dist/l10n/ru.js"
+import {shortenDateString} from '../../utils/event.js'
+import { rangePlugin} from '../../../node_modules/flatpickr/dist/plugins/rangePlugin.js';
 // import 'flatpickr/dist/flatpickr.min.css'
 import '../../../node_modules/flatpickr/dist/flatpickr.min.css';
-
+import { convertDateFromat }  from '../../utils/event.js';
+import { DATE_FORMAT } from '../../const.js';
 
 export default class EditFormView extends AbstractStatefulView {
   #datepickerFromDate = null;
@@ -113,41 +115,113 @@ export default class EditFormView extends AbstractStatefulView {
 
 
   #dateFromChangeHandler = (userDate) => {
+        // console.log(userDate)
+
     this.updateElement({
       dateFrom: userDate,
     })
   };
 
   #dateToChangeHandler = (userDate) => {
+    console.log(userDate)
     this.updateElement({
       dateTo: userDate,
     })
+    console.log('после обновления');
+    console.log(this._state.dateTo);
   };
 
   #setDatepicker() {
+    let dateStart = new Date(this._state.dateFrom);
+    dateStart = Date.parse(dateStart) + dateStart.getTimezoneOffset() * 60000;
+    // console.log('----');
+    // console.log(new Date(dateStart).toLocaleString())
+    const dateEnd = convertDateFromat(this._state.dateTo, DATE_FORMAT['DD/MM/YY HH:mm']);
 
-    this.#datepickerFromDate = flatpickr(
-      this.element.querySelector('#event-start-time-1'), {
-        // "locale": "ru",
-        "locale": Russian,
-        enableTime: true,
-        dateFormat: 'd/m/y h:i',
-        defaultDate: this._state.dateFrom,
-        // altInput: true,
-        // altFormat: 'F j, Y',
-        onChange: this.#dateFromChangeHandler,
-      }
+    const startDateInput = this.element.querySelector('#event-start-time-1');
+    const endDateInput = this.element.querySelector('#event-end-time-1');
+    // value="2026-03-05T22:55" 2019-07-13T08:15
+    let isDateExpired = false;
+    // console.log(this._state.dateTo);
+    const dat = new Date(this._state.dateTo);
+
+    this.#datepickerFromDate = flatpickr(startDateInput, {
+      enableTime: true,
+      altInput: true,
+      altFormat: "d/m/y H:i",
+      defaultDate: dateStart,
+      // dateFormat: "d/m/y H:i",
+      // "plugins": [new rangePlugin({ input: "#event-end-time-1"})],
+      // disable: [
+      //   function (date) {
+      //     console.log(date)
+      //     if (date.getDate() < Date.now()) {
+      //       isDateExpired = true;
+      //       return isDateExpired;
+      //     }
+      //   }
+      // ],
+
+      // defaultDate: isDateExpired? Date.now() : dateStart,
+      // // onChange: this.#dateFromChangeHandler,
+      // onChange: function (selectedDates) {
+      //   const [start, end] = selectedDates;
+      //   console.log(start);
+      // }   //this.#dateFromChangeHandler,
+    }
     );
+    console.log(this.#datepickerFromDate)
+    console.log(this.#datepickerFromDate.latestSelectedDateObj)
+    console.log(this.#datepickerFromDate.selectedDates)
 
+    // this.#datepickerToDate =
     this.#datepickerToDate = flatpickr(
-      this.element.querySelector('#event-end-time-1'), {
-        dateFormat: 'j F',
-        defaultDate: this._state.dateTo,
-        onChange: this.#dateToChangeHandler,
-      }
+      endDateInput, {
+      enableTime: true,
+      dateFormat: "d/m/y H:i",
+      defaultDate: dateEnd,
+      disable: [
+        (date) => {
+          console.log('--------сначала выбранная дата--------------')
+          console.log(date);
+          console.log(this.#datepickerFromDate.latestSelectedDateObj)
+          console.log('---------->>-----------')
+
+          console.log(date.getTime());
+          console.log(this.#datepickerFromDate.latestSelectedDateObj.getTime());
+          return !(date.getTime() > this.#datepickerFromDate.latestSelectedDateObj.getTime())
+        }
+      ],
+      onChange: (date) => {
+        console.log('onclick')
+        console.log(date);
+        this.#dateToChangeHandler(date);
+      },
+    }
     );
+
+
+    // this.#datepickerToDate.config.onChange = dateObject =>
+    //   console.log(dateObject);
+// console.log(this.#datepickerFromDate.selectedDates)
+
+    // console.log('пытаюсь найти дату');
+    // console.log(this.#datepickerFromDate.selectedDates[0]);
+    // if(this.#datepickerFromDate.selectedDates[0] < this.#datepickerToDate.selectedDates[0]) {
+    //   console.log('дата до меньше даты после');
+    // }
+
+    // if(this.#datepickerFromDate.selectedDates[0] > this.#datepickerToDate.selectedDates[0]) {
+    //   console.log('дата после меньше даты до');
+    // }
+
+    // if(this.#datepickerFromDate.selectedDates[0] = this.#datepickerToDate.selectedDates[0]) {
+    //   console.log('даты равны');
+    // }
+
 
   }
+
 /** TODO  */
     removeElement() {
       super.removeElement();

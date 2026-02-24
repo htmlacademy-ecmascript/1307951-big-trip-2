@@ -15,7 +15,6 @@ dayjs.tz.setDefault('Europe/Moscow');
  * @returns {string} возвращает строку в формате @dateFormat
  */
 function convertDateFromat(dueDate, dateFormat) {
-
   return dueDate ? dayjs.tz(dueDate, 'Europe/Moscow').format(dateFormat) : '';
 }
 
