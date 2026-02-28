@@ -1,20 +1,15 @@
 import { createEditFormTemplate } from '../edit-form-view/edit-form-template.js';
 import AbstractStatefulView from '../../framework/view/abstract-stateful-view.js';
+import { isEarlier, getDaysDifference, getDateWithMinTripTimeOffset } from '../../utils/common.js';
 import flatpickr from 'flatpickr';
-// import { Russian } from "flatpickr/dist/l10n/ru.js"
-import {shortenDateString} from '../../utils/event.js'
-import { rangePlugin} from '../../../node_modules/flatpickr/dist/plugins/rangePlugin.js';
-// import 'flatpickr/dist/flatpickr.min.css'
 import '../../../node_modules/flatpickr/dist/flatpickr.min.css';
-import { convertDateFromat }  from '../../utils/event.js';
-import { DATE_FORMAT } from '../../const.js';
+import { MIN_TRIP_TIME } from '../../const.js';
 
 export default class EditFormView extends AbstractStatefulView {
   #datepickerFromDate = null;
   #datepickerToDate = null;
   #getAllDestinations = null;
   #tripEvent = null;
-  // #formParam = null;
   #handleFormSubmit = null;
   #handleEditClick = null;
   #handleOnEscKeyClick = null;
@@ -32,7 +27,7 @@ export default class EditFormView extends AbstractStatefulView {
   #isSubmitDisabled = true;
 
 
-  constructor({ destinations, tripEvent, /*formParam, */onFormSubmit, onEditClick, onTypeChange, getDestinationById , getDestinationByName, getAllOffers, getTripEventOffers/** onEscKeyClick*/ }) {
+  constructor({ destinations, tripEvent, /*formParam, */onFormSubmit, onEditClick, onTypeChange, getDestinationById, getDestinationByName, getAllOffers, getTripEventOffers/** onEscKeyClick*/ }) {
     super();
     // нужно для создания списка точек назначения
     this.#getAllDestinations = destinations; // список с названиями точек назначения
@@ -48,7 +43,6 @@ export default class EditFormView extends AbstractStatefulView {
     this.#getTripEventOffer = getTripEventOffers;
 
     this.#destinationObject = this.#getDestinationById(this.#tripEvent.destination);
-    // this.#type = this.#tripEvent.type;
     this.#allOffers = this.#getAllOffers(this.#tripEvent.type);
     this.#appliedOffers = this.#getTripEventOffer(this.#tripEvent);
     // метод статический! для него экземпляр не нужен
@@ -94,7 +88,8 @@ export default class EditFormView extends AbstractStatefulView {
 
   // вынести в презентер
   static parseEventToState(tripEvent, destination, allOffers, appliedOffers) {
-    return { ...tripEvent,
+    return {
+      ...tripEvent,
       destinationObj: destination,
       allOffers: allOffers,
       appliedOffers: appliedOffers,
@@ -111,134 +106,94 @@ export default class EditFormView extends AbstractStatefulView {
     return tripEvent;
   }
 
-  /*---------------- FLATPICKER start --------------------------- */
-
-
   #dateFromChangeHandler = (userDate) => {
-        // console.log(userDate)
-
     this.updateElement({
       dateFrom: userDate,
     })
   };
 
   #dateToChangeHandler = (userDate) => {
-    console.log(userDate)
+    if (userDate instanceof Date) {
+      userDate = userDate.toISOString();
+      console.log(userDate)
+    }
+
     this.updateElement({
       dateTo: userDate,
     })
-    console.log('после обновления');
-    console.log(this._state.dateTo);
   };
 
   #setDatepicker() {
-    let dateStart = new Date(this._state.dateFrom);
-    dateStart = Date.parse(dateStart) + dateStart.getTimezoneOffset() * 60000;
-    // console.log('----');
-    // console.log(new Date(dateStart).toLocaleString())
-    const dateEnd = convertDateFromat(this._state.dateTo, DATE_FORMAT['DD/MM/YY HH:mm']);
-
     const startDateInput = this.element.querySelector('#event-start-time-1');
     const endDateInput = this.element.querySelector('#event-end-time-1');
-    // value="2026-03-05T22:55" 2019-07-13T08:15
-    let isDateExpired = false;
-    // console.log(this._state.dateTo);
-    const dat = new Date(this._state.dateTo);
 
-    this.#datepickerFromDate = flatpickr(startDateInput, {
-      enableTime: true,
-      altInput: true,
-      altFormat: "d/m/y H:i",
-      defaultDate: dateStart,
-      // dateFormat: "d/m/y H:i",
-      // "plugins": [new rangePlugin({ input: "#event-end-time-1"})],
-      // disable: [
-      //   function (date) {
-      //     console.log(date)
-      //     if (date.getDate() < Date.now()) {
-      //       isDateExpired = true;
-      //       return isDateExpired;
-      //     }
-      //   }
-      // ],
+    this.#datepickerFromDate = flatpickr(startDateInput,
+      {
+        enableTime: true,
+        altInput: true,
+        altFormat: "d/m/y H:i",
+        defaultDate: this._state.dateFrom,
 
-      // defaultDate: isDateExpired? Date.now() : dateStart,
-      // // onChange: this.#dateFromChangeHandler,
-      // onChange: function (selectedDates) {
-      //   const [start, end] = selectedDates;
-      //   console.log(start);
-      // }   //this.#dateFromChangeHandler,
-    }
-    );
-    console.log(this.#datepickerFromDate)
-    console.log(this.#datepickerFromDate.latestSelectedDateObj)
-    console.log(this.#datepickerFromDate.selectedDates)
+        onChange: (date) => {
+          if (this._state.dateTo) {
 
-    // this.#datepickerToDate =
+            const isDateToEarlier = isEarlier(date[0], new Date(this._state.dateTo));
+            const datesDifference = getDaysDifference(date[0], this._state.dateTo);
+            const minDateTo = getDateWithMinTripTimeOffset(date[0], MIN_TRIP_TIME);
+
+            const isDateToCloserMinTripTime = (datesDifference > 0 && datesDifference < MIN_TRIP_TIME);
+
+            if (isDateToEarlier || isDateToCloserMinTripTime) {
+              this.#dateToChangeHandler(minDateTo);
+            }
+          }
+          this.#dateFromChangeHandler(date[0]);
+        },
+      });
+
     this.#datepickerToDate = flatpickr(
-      endDateInput, {
-      enableTime: true,
-      dateFormat: "d/m/y H:i",
-      defaultDate: dateEnd,
-      disable: [
-        (date) => {
-          console.log('--------сначала выбранная дата--------------')
-          console.log(date);
-          console.log(this.#datepickerFromDate.latestSelectedDateObj)
-          console.log('---------->>-----------')
+      endDateInput,
+      {
+        enableTime: true,
+        dateFormat: "d/m/y H:i",
+        defaultDate: this._state.dateTo,
+        disable: [
+          (date) => {
+            const currentDateFrom = new Date(this._state.dateFrom);
 
-          console.log(date.getTime());
-          console.log(this.#datepickerFromDate.latestSelectedDateObj.getTime());
-          return !(date.getTime() > this.#datepickerFromDate.latestSelectedDateObj.getTime())
-        }
-      ],
-      onChange: (date) => {
-        console.log('onclick')
-        console.log(date);
-        this.#dateToChangeHandler(date);
-      },
+            const datesDifference = getDaysDifference(this._state.dateFrom, date);
+            const isCurrentDateDate = ( date.getDate() !== currentDateFrom.getDate() );
+
+            return isCurrentDateDate ? (datesDifference < 0) : false;
+          },
+        ],
+        onChange: (date) => {
+
+          const daysDifference = getDaysDifference(this._state.dateFrom, date[0]);
+          const minDateTo = getDateWithMinTripTimeOffset(new Date(this._state.dateFrom), MIN_TRIP_TIME);
+
+          return (daysDifference < MIN_TRIP_TIME) ? this.#dateToChangeHandler(minDateTo) : this.#dateToChangeHandler(date[0]);
+        },
+      });
+
+  }
+
+  /** TODO  */
+  removeElement() {
+    super.removeElement();
+
+    if (this.#datepickerFromDate) {
+      this.#datepickerFromDate.destroy();
+      this.#datepickerFromDate = null;
     }
-    );
 
-
-    // this.#datepickerToDate.config.onChange = dateObject =>
-    //   console.log(dateObject);
-// console.log(this.#datepickerFromDate.selectedDates)
-
-    // console.log('пытаюсь найти дату');
-    // console.log(this.#datepickerFromDate.selectedDates[0]);
-    // if(this.#datepickerFromDate.selectedDates[0] < this.#datepickerToDate.selectedDates[0]) {
-    //   console.log('дата до меньше даты после');
-    // }
-
-    // if(this.#datepickerFromDate.selectedDates[0] > this.#datepickerToDate.selectedDates[0]) {
-    //   console.log('дата после меньше даты до');
-    // }
-
-    // if(this.#datepickerFromDate.selectedDates[0] = this.#datepickerToDate.selectedDates[0]) {
-    //   console.log('даты равны');
-    // }
-
+    if (this.#datepickerToDate) {
+      this.#datepickerToDate.destroy();
+      this.#datepickerToDate = null;
+    }
 
   }
 
-/** TODO  */
-    removeElement() {
-      super.removeElement();
-
-      if (this.#datepickerFromDate) {
-        this.#datepickerFromDate.destroy();
-        this.#datepickerFromDate = null;
-      }
-
-      if (this.#datepickerToDate) {
-        this.#datepickerToDate.destroy();
-        this.#datepickerToDate = null;
-      }
-
-  }
-
-  /*---------------- FLATPICKER end ------------------------------ */
   // когда выбрал другой тип путешествия
   #onChangeEventOffers = (evt) => {
     // console.log(evt.target);
@@ -249,10 +204,10 @@ export default class EditFormView extends AbstractStatefulView {
       // ищем все предложения для нового типа (перенести в презентер)
       // const elem = document.querySelector('#event-destination-1');
       // console.log(elem);
-    // изменяем тип события
-    // 1. перерисовать оферы
-    // 2. поменять занчок типа
-    // 3. закрыть окно
+      // изменяем тип события
+      // 1. перерисовать оферы
+      // 2. поменять занчок типа
+      // 3. закрыть окно
 
       // поменятья allOffers и appliedOffers
 
