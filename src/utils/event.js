@@ -15,8 +15,8 @@ dayjs.tz.setDefault('Europe/Moscow');
  * @returns {string} возвращает строку в формате @dateFormat
  */
 function convertDateFromat(dueDate, dateFormat) {
-
-  return dueDate ? dayjs.tz(dueDate, 'Europe/Moscow').format(dateFormat) : '';
+  // return dueDate ? dayjs.tz(dueDate, 'Europe/Moscow').format(dateFormat) : '';
+  return dueDate ? dayjs(dueDate).format(dateFormat) : '';
 }
 
 /**
@@ -104,7 +104,6 @@ function isEventDateInPresent(dueDateStart, dueDateEnd) {
   const condition3 = dueDateEnd && dueDateStart;
   return condition1 && condition2 && condition3;
 }
-
 
 function isEventDateInFuture(dueDate) {
   return dueDate && dayjs().isBefore(dueDate, 'D');

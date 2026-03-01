@@ -199,7 +199,7 @@ export const offers = [
     offers: []
   },
   {
-    type: 'Restaurant',
+    type: 'restaurant',
     offers: [
       {
         id: 'f2g3h4i5-j6k7-8901-fGhI-234567890123',

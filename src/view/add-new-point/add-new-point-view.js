@@ -1,7 +1,9 @@
 import {createAddNewPointTemplate} from '../add-new-point/add-new-point-template.js';
-import AbstractView from '../../framework/view/abstract-view.js';
+import AbstractStatefulView from '../../framework/view/abstract-stateful-view.js';
 
-export default class AddNewPointWithoutOffersView extends AbstractView{
+export default class AddNewPointWithoutOffersView extends AbstractStatefulView{
+
+
   getTemplate() {
     return createAddNewPointTemplate();
   }

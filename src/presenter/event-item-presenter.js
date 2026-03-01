@@ -13,17 +13,19 @@ export default class EventItemPresenter {
   #formParameters = null;
 
   #tripEventComponent = null; // EventItemView
-
+  #tripEventsModel = null;
   #editFormEventComponent = null;
   #tripEvent = null; // dataFromModel
   #handleDataChange = null;
   #handleModeChange = null;
   #mode = Mode.DEFAULT;
 
-  constructor ({listContainer, eventParameters, formParameters, onDataChange, onModeChange}) {
+  constructor ({listContainer, tripEventsModel, tripEvent, eventParameters, /*formParameters,*/ onDataChange, onModeChange}) {
     this.#listContainer = listContainer;
+    this.#tripEventsModel = tripEventsModel;
+    this.#tripEvent = tripEvent;
     this.#eventParameters = eventParameters;
-    this.#formParameters = formParameters;
+    // this.#formParameters = formParameters;
     this.#handleDataChange = onDataChange;
     this.#handleModeChange = onModeChange;
   }
@@ -34,16 +36,23 @@ export default class EventItemPresenter {
     const prevFormComponent = this.#editFormEventComponent;
 
     this.#tripEventComponent = new EventItemView({
+      tripsModel: this.#tripEventsModel,
       eventParam: this.#eventParameters,
       onArrowDownClick: this.#handleArrowDownClick,
       onFavoriteClick: this.#handleFavouriteClick,
     });
 
     this.#editFormEventComponent = new EditFormView({
+      destinations: this.#getDestinations, // обращение к модели
       tripEvent: this.#tripEvent,
-      formParam: this.#formParameters,
+      // formParam: this.#formParameters,
       onFormSubmit: this.#handleFormSubmit,
       onEditClick: this.#handleArrowUpClick,
+      onTypeChange: this.#handleChangeTripEventType,
+      getDestinationById: this.#getDestinationPointById,
+      getDestinationByName: this.#getDestinationPointByName,
+      getAllOffers: this.#getAllOffers,
+      getTripEventOffers: this.#getTripEventOffers,
     });
 
     /** Если компонент не создан и он новый, то отрисовываем только что созданный компонент*/
@@ -126,6 +135,19 @@ export default class EventItemPresenter {
     remove(this.#editFormEventComponent);
     remove(this.#tripEventComponent);
   }
+  /******************************************************************************* */
+  /* для работы с формой */
+
+  #getDestinations = () => this.#tripEventsModel.getDestinationNames();
+
+  #getDestinationPointByName = (name) => this.#tripEventsModel.getDestinationPointByName(name);
+  #getDestinationPointById = (id) => this.#tripEventsModel.getDestinationPointById(id);
+  #getAllOffers = (type) => this.#tripEventsModel.getAllOffersByType(type);
+  #getTripEventOffers = (tripEvent) => this.#tripEventsModel.getOffersByEvent(tripEvent);
+
+  #handleChangeTripEventType = (evt) => {
+
+  };
 
   init(tripEvent) {
     this.#tripEvent = tripEvent;

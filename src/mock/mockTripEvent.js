@@ -9,9 +9,7 @@ const tripEvents = [
     dateTo: '2019-07-11T11:22:13.375Z',
     destination: 'cfe416cq-10xa-ye10-8077-2fs9a01edcab',
     isFavorite: false,
-    offers: [
-      'b4c3e4e6-9053-42ce-b747-e281314baa31'
-    ],
+    offers: [],
     type: 'taxi'
   },
   {
@@ -27,6 +25,16 @@ const tripEvents = [
       'c3d4e5f6-g7h8-9012-cDeF-345678901234'
     ],
     type: 'taxi'
+  },
+  {
+    id: 'f4b62099-293f-4c3d-a702-94eec4a9708c',
+    basePrice: 200,
+    dateFrom: '2026-03-05T22:55:56.845Z',
+    dateTo: '2026-04-01T11:22:13.375Z',
+    destination: 'd4e5f6g7-h8i9-0123-def0-456789012548',
+    isFavorite: false,
+    offers: [],
+    type: 'bus',
   },
   {
     id: 'g5c731aa-3a4g-5d4e-b813-a5ffd5b3919d',

@@ -8,10 +8,12 @@ export default class EventItemView extends AbstractView{
   #handleOnArrowDownClick = null;
   #handleOnFavoriteClick = null;
   #handleOnEscKeyClick = null;
+  #tripsModel = null;
 
 
-  constructor({eventParam, onArrowDownClick, onFavoriteClick/**,onEscKeyClick */}) {
+  constructor({tripsModel, eventParam, onArrowDownClick, onFavoriteClick/**,onEscKeyClick */}) {
     super();
+    this.#tripsModel = tripsModel;
     this.#eventParam = eventParam;
     this.#handleOnArrowDownClick = onArrowDownClick;
     this.#handleOnFavoriteClick = onFavoriteClick;
