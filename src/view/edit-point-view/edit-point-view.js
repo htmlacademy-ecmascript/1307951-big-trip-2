@@ -60,27 +60,27 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   #dateFromChangeHandler = ([userDate]) => {
-    const dateFromStr = moment.utc(userDate).toISOString();
+    const pointStartDate = moment.utc(userDate).toISOString();
     this.updateElement({
-      dateFrom: dateFromStr,
+      dateFrom: pointStartDate,
     });
   };
 
   #dateToChangeHandler = ([userDate]) => {
-    const dateToStr = moment.utc(userDate).toISOString();
+    const pointEndDate = moment.utc(userDate).toISOString();
     this.updateElement({
-      dateTo: dateToStr,
+      dateTo: pointEndDate,
     });
   };
 
   #isFormValid = () => {
     const { destination, dateFrom, dateTo, basePrice, allDestinations } = this._state;
 
-    const isDestination = allDestinations.some((destin) => destin.name === destination.name);
+    const isDestination = allDestinations.some((destinationItem) => destinationItem.name === destination.name);
     const areDatesSelected = !!dateFrom && !!dateTo;
-    const isDatesOrderCorrect = dayjs(dateTo).isAfter(dayjs(dateFrom));
-    const priceAsNumber = Number(basePrice);
-    const isPrice = Number.isInteger(basePrice) && (priceAsNumber > 0);
+    const isDatesOrderCorrect = dayjs(dateFrom).isBefore(dayjs(dateTo));
+    const checkedPrice = Number(basePrice);
+    const isPrice = Number.isInteger(basePrice) && (checkedPrice > 0);
 
     return (
       isDestination &&
@@ -216,132 +216,57 @@ export default class EditPointView extends AbstractStatefulView {
     this.#setDatepicker();
   }
 
+  #createFlatpickerItem = ({element, defaultDate, onchangeHandler, minDate = null}) =>
+    flatpickr(
+      element,
+      {
+        enableTime: true,
+        // eslint-disable-next-line camelcase
+        time_24hr: true,
+        utc: true,
+        allowInput: false,
+        defaultDate: defaultDate,
+        minDate: minDate,
+        dateFormat: 'd/m/y H:i',
+        altFormat: 'd/m/y H:i',
+        locale: {
+          firstDayOfWeek: 1,
+          weekdays: {
+            shorthand: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            longhand: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+          },
+          months: {
+            shorthand: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            longhand: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+          },
+          today: 'Сегодня'
+        },
+
+        onChange: onchangeHandler,
+      }
+    );
 
   #setDatepicker() {
+    this.#startPicker = this.#createFlatpickerItem({
+      element: this.element.querySelector('#event-start-time-1'),
+      defaultDate: this._state.dateFrom ? new Date().toISOString() : '',
+      onchangeHandler: this.#dateFromChangeHandler,
+    });
 
-    if (this._state.dateFrom && this._state.dateTo) {
+    this.#endPicker = this.#createFlatpickerItem({
+      element: this.element.querySelector('#event-end-time-1'),
+      defaultDate: this._state.dateTo || '',
+      onchangeHandler: this.#dateToChangeHandler,
+      minDate: this._state.dateFrom,
+    });
 
-      this.#startPicker = flatpickr(
-        this.element.querySelector('#event-start-time-1'),
-        {
-          enableTime: true,
-          // eslint-disable-next-line camelcase
-          time_24hr: true,
-          utc: true,
-          allowInput: false,
-          defaultDate: (new Date()).toISOString(),
-          dateFormat: 'd/m/y H:i',
-          altFormat: 'd/m/y H:i',
-          locale: {
-            firstDayOfWeek: 1,
-            weekdays: {
-              shorthand: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-              longhand: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-            },
-            months: {
-              shorthand: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-              longhand: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-            },
-            today: 'Сегодня'
-          },
-
-          onChange: this.#dateFromChangeHandler,
-        }
-      );
-
-      this.#endPicker = flatpickr(
-        this.element.querySelector('#event-end-time-1'),
-        {
-          enableTime: true,
-          // eslint-disable-next-line camelcase
-          time_24hr: true,
-          utc: true,
-          allowInput: false,
-          defaultDate: this._state.dateTo,
-          allowInvalidPreload: true,
-          minDate: this._state.dateFrom,
-          maxDate: null,
-          dateFormat: 'd/m/y H:i',
-          altFormat: 'd/m/y H:i',
-
-
-          locale: {
-            firstDayOfWeek: 1,
-            weekdays: {
-              shorthand: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-              longhand: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-            },
-            months: {
-              shorthand: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-              longhand: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-            },
-            today: 'Сегодня'
-          },
-          onChange: this.#dateToChangeHandler,
-        }
-      );
-
+    if (this._state.dateFrom) {
       this.#startPicker.setDate(this._state.dateFrom);
-      this.#endPicker.setDate(this._state.dateTo);
-
-    } else {
-      this.#startPicker = flatpickr(
-        this.element.querySelector('#event-start-time-1'),
-        {
-          enableTime: true,
-          // eslint-disable-next-line camelcase
-          time_24hr: true,
-          utc: true,
-          allowInput: false,
-
-          dateFormat: 'd/m/y H:i',
-          altFormat: 'd/m/y H:i',
-
-          locale: {
-            firstDayOfWeek: 1,
-            weekdays: {
-              shorthand: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-              longhand: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-            },
-            months: {
-              shorthand: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-              longhand: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-            },
-            today: 'Сегодня'
-          },
-          onChange: this.#dateFromChangeHandler
-        }
-      );
-
-      this.#endPicker = flatpickr(
-        this.element.querySelector('#event-end-time-1'),
-        {
-          enableTime: true,
-          // eslint-disable-next-line camelcase
-          time_24hr: true,
-          utc: true,
-          allowInput: false,
-          dateFormat: 'd/m/y H:i',
-          altFormat: 'd/m/y H:i',
-
-          locale: {
-            firstDayOfWeek: 1,
-            weekdays: {
-              shorthand: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-              longhand: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-            },
-            months: {
-              shorthand: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-              longhand: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
-            },
-            today: 'Сегодня'
-          },
-
-          onChange: this.#dateToChangeHandler,
-        }
-      );
     }
 
+    if (this._state.dateTo) {
+      this.#endPicker.setDate(this._state.dateTo);
+    }
   }
 
   removeElement() {

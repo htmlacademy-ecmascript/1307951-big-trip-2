@@ -1,7 +1,7 @@
 import EditPointView from '../view/edit-point-view/edit-point-view';
 import PointView from '../view/point-view/point-view';
 
-import { FilterTypes, UpdateType, UserAction } from '../const';
+import { FilterType, UpdateType, UserAction } from '../const';
 import { remove, render, replace } from '../framework/render';
 import { isDateEquall } from '../utils/point';
 
@@ -102,7 +102,7 @@ export default class PointPresenter {
         UpdateType.MAJOR,
         point,
       );
-      this.#handleFilterReset(FilterTypes.EVERYTHING);
+      this.#handleFilterReset(FilterType.EVERYTHING);
       this.#handleNewPointButtonEvent();
     } catch (err) {
       throw new Error();
@@ -114,7 +114,6 @@ export default class PointPresenter {
     this.destroy();
     this.#handleNewPointButtonEvent();
     this.#removeFromPresentersSet(this);
-    document.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #handleValidationFailure = () => {
@@ -208,6 +207,7 @@ export default class PointPresenter {
     }
 
     remove(this.#pointContainerComponent);
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
   }
 
   renderPoint() {

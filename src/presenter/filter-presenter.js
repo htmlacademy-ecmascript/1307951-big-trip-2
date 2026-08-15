@@ -1,13 +1,12 @@
 import FilterView from '../view/filter-view/filter-view';
 import { render, replace, remove } from '../framework/render';
-import { UpdateType } from '../const';
+import { FilterType, UpdateType } from '../const';
 
 export default class FilterPresenter {
   #filterContainer = null;
   #filterComponent = null;
   #filtersModel = null;
   #pointsModel = null;
-  #isDisabledFilterBtn = false;
   #areActivePoints = null;
 
   #handleModelEvent = () => {
@@ -23,10 +22,15 @@ export default class FilterPresenter {
   };
 
   #checkNoPoints = () => {
-    this.isDisabledFilterBtn = this.#areActivePoints();
-    if (this.isDisabledFilterBtn) {
-      this.#filterComponent.element.querySelector('.trip-filters__filter-input:checked').disabled = true;
-    }
+    Object.values(FilterType).forEach((filterName) => {
+      if(this.#areActivePoints(filterName)){
+        this.#filterComponent.disableFilterButton(filterName);
+      }
+    });
+  };
+
+  resetFilter = () => {
+    this.#handleFilterTypeChange(FilterType.EVERYTHING);
   };
 
   constructor({ headerContainer, filtersModel, pointsModel, checkActivPointsNumber}) {
@@ -58,6 +62,8 @@ export default class FilterPresenter {
   }
 
   destroy() {
+    this.#filtersModel.removeObserver(this.#handleModelEvent);
+    this.#pointsModel.removeObserver(this.#handleModelEvent);
     remove(this.#filterComponent);
   }
 

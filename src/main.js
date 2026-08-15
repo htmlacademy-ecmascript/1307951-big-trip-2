@@ -1,18 +1,17 @@
+
 import PointsModel from './model/points-model';
 import FilterModel from './model/filter-model';
-
 import PagePresenter from './presenter/page-presenter';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import PointApiService from './points-api-service';
 
 import { clearElement } from './utils/point';
 
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 
-import PointApiService from './points-api-service';
-
 const AUTHORIZATION = 'Basic qfmiinrz5j23k1x';
-const END_POINT = 'https://23.objects.htmlacademy.pro/big-trip';
+const END_POINT = 'https://22.objects.htmlacademy.pro/big-trip';
 
 const siteBodyElement = document.querySelector('.page-body');
 const siteHeaderElement = siteBodyElement.querySelector('.trip-main');
